@@ -13,3 +13,4 @@ def ataques(subject):
     return int(attacks)
 
 print(ataques(ini_subjects[1]), ini_subjects[1])
+
