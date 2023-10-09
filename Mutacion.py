@@ -1,5 +1,6 @@
 import random
 
+
 # Se creó una función para mutación de mezcla en un archivo aparte,
 # no afecta a los extremos de la lista
 def mutacion(board):
@@ -10,5 +11,3 @@ def mutacion(board):
         board[alelos[i + 1]] = gen1
         board[alelos[i]] = gen2
     return board
-
-
