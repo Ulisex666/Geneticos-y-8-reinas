@@ -1,19 +1,8 @@
 import random
 import math
-
+from funciones import ataques, mutacion
 # Se utiliza representación por permutación, tomando el índice como fila y el valor como columna
 ini_subjects = [random.sample(range(8), 8) for i in range(0, 20)]
-
-
-# Como no se pueden atacar en filas o columna, solo nos interesa encontrar ataques en diagonal
-def ataques(subject):
-    attacks = 0
-    for i in range(8):
-        for j in range(i + 1, 8):
-            if abs(subject[i] - subject[j]) == abs(j - i):
-                attacks = attacks + 1
-    return int(attacks)
-
 
 # Se aplicará el método de selección "Sobrante estocástico", utilizando la función de ataque
 # para calcular el fitness
@@ -25,3 +14,4 @@ val_esp = [fitness_list[i]/fitness_mean for i in range(len(fitness_list))]
 padres1 = [ini_subjects[i] for i in range(len(ini_subjects)) if math.trunc(val_esp[i]) > 0]
 padres2 = [ini_subjects[i] for i in range(len(ini_subjects)) if int(val_esp[i]) == 0
            and random.random() > 0.5]
+print(val_esp)
