@@ -74,7 +74,7 @@ def mutacion(board):
 ```
 Y finalmente, para el reemplazo generacional, se eliminan a todos los padres y se reemplazan con los hijos. Se decidió trabajar con una población inicial de 50 tableros, durante el transcurso de 100 generaciones. También se le indico al programa que imprima una matriz cada vez que calcule que está tiene 0 ataques, es decir, es una solución del problema.
 
-##Conclusiones
+## Conclusiones
 
 Empecemos analizando las gráficas de convergencia, la primera nos indica el promedio de ataques de cada generación, y la segunda cuál fue el número mínimo de ataques de cada generación.
 
@@ -85,3 +85,20 @@ Empecemos analizando las gráficas de convergencia, la primera nos indica el pro
 Podemos ver que el número de ataques promedio no baja significamente con el paso de las generaciones, de hecho en este caso específico pareciera que tiende a crecer. Sin embargo, intentando con muchas otras diferentes semillas, se nota que la tendencia es que se mantiene alrededor de 5 ataques en promedio. Esto puede deberse a muchos factores: para empezar, como se comento anteriormente, la cruza cíclica es la parte más complicada de este proyevto, por lo que es probable que se haya cometido algún error a la hora de su implementación. Sin embargo, se comprobó muchas veces para asegurarse de que funcionaba correctamente, incluso a la hora de ciclarse.
 
 Otra explicación es el hecho de que este tipo de mezcla no da mucha variabilidad. A la hora del desarrollo de este proyecto se observó que hay muchas situaciones en las que el hijo es exactamente igual a uno de los padres, o solamente cambia en 2 valores. Así, la cruza de los elementos no da cambios siginificativos para mucha de la descendencia. Además, es muy probable que un tablero mute, independientemente del fitness que esta tenga, y la mutación afecta a casi todas las filas, por lo que es muy díficil que los tableros sobresalientes mantengan su información.
+
+Para mejorar este proyecto, se pueden utilizar funciones más eficientes para cada parte del algoritmo, analizar de forma más profunda el problema y seleccionar otros métodos que estén mejor enfocados a este, y utilizar una mayor cantidad de sujetos. Y aún así, con todas estas limitaciones, el algortimo es suficientemente eficaz como para darnos un par de soluciones con la semilla indicada. Se concluirá el reporte de este proyecto con la semilla utilizada y una de las soluciones encontradas. 
+
+**Semilla:**  20000410
+
+**Soluciones:**
+
+ [0 0 0 1 0 0 0 0] \
+ [0 0 0 0 0 1 0 0] \
+ [0 0 0 0 0 0 0 1] \
+ [0 0 1 0 0 0 0 0] 
+ \
+ [1 0 0 0 0 0 0 0] \
+ [0 0 0 0 0 0 1 0] \
+ [0 0 0 0 1 0 0 0] \
+ [0 1 0 0 0 0 0 0] 
+
