@@ -1,6 +1,6 @@
 import random
 import math
-from funciones import ataques, mutacion, cruza1, cruza2
+from funciones import ataques, mutacion, cruza1, cruza2, tablero
 #random.seed(99)
 # Se utiliza representación por permutación, tomando el índice como fila y el valor como columna
 ini_subjects = [random.sample(range(8), 8) for i in range(0, 50)]
@@ -38,4 +38,12 @@ while indices_padres:
 
     if len(indices_padres) == 1:
         break
+
+# Se reemplazarán a los padres por los hijos y se mutaran de acuerdo a un bolado
+
+padres = hijos
+for i in range(len(hijos)):
+    if random.random() > 0.5:
+        padres[i] = mutacion(padres[i])
+
 

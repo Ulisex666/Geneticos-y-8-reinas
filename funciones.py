@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 
 # Se creó un archivo separado en donde crear las funciones necesarias para el proyecto
@@ -53,3 +54,11 @@ def cruza2(ciclos, sujeto_1, sujeto_2):
             for j in range(len(ciclos[i])):
                 hijo[ciclos[i][j]] = sujeto_2[ciclos[i][j]]
     return hijo
+
+
+def tablero(permutacion):
+    zeros = np.zeros((8, 8), dtype=int)
+    for i in range(8):
+        col = permutacion[i]
+        zeros[i][col] = 1
+    return zeros
