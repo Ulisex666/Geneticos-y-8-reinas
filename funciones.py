@@ -41,3 +41,15 @@ def cruza1(sujeto_1, sujeto_2):
                 break
         ciclos.append(ciclo)
     return ciclos
+
+
+def cruza2(ciclos, sujeto_1, sujeto_2):
+    hijo = [0 for i in range(len(sujeto_1))]
+    for i in range(len(ciclos)):
+        if i % 2 == 0:
+            for j in range(len(ciclos[i])):
+                hijo[ciclos[i][j]] = sujeto_1[ciclos[i][j]]
+        else:
+            for j in range(len(ciclos[i])):
+                hijo[ciclos[i][j]] = sujeto_2[ciclos[i][j]]
+    return hijo
