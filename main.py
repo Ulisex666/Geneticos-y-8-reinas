@@ -1,20 +1,22 @@
 import random
 import math
 import matplotlib.pyplot as plt
+import numpy as np
 from funciones import ataques, mutacion, cruza1, cruza2, tablero
 
 # Se utiliza representación por permutación, tomando el índice como fila y el valor como columna
 ini_subjects = [random.sample(range(8), 8) for i in range(0, 50)]
 generaciones = 100
 ataques_promedio = []
-random.seed(10042000)
+ataques_min = []
+random.seed(20000410)
 for j in range(generaciones):
     # Se aplicará el método de selección "Sobrante estocástico", utilizando la función de ataque
     # para calcular el fitness
     padres = ini_subjects
-    fitness_list = [1 / (ataques(padres[i]) + 1) for i in range(len(padres))]
-    fitness_mean = sum(fitness_list)/len(fitness_list)
-    val_esp = [fitness_list[i]/fitness_mean for i in range(len(fitness_list))]
+    fitness_list = [1 / (1 + ataques(padres[i])) for i in range(len(padres))]
+    fitness_mean = sum(fitness_list) / len(fitness_list)
+    val_esp = [fitness_list[i] / fitness_mean for i in range(len(fitness_list))]
 
     # Se crean dos listas, una tomando los tableros cuyo valor esperado tiene parte entera mayor
     # que 0 y otra tomando los tableros restantes con un volado.
@@ -49,16 +51,26 @@ for j in range(generaciones):
 
     padres = hijos
     for i in range(len(hijos)):
-        if random.random() > 0.5:
+        if random.random() > 0.9:
             padres[i] = mutacion(padres[i])
 
     ataques_generacion = [ataques(padres[i]) for i in range(len(padres))]
     ataques_promedio.append(sum(ataques_generacion) / len(ataques_generacion))
+    ataques_min.append(np.min(ataques_generacion))
 
     for i in range(len(ataques_generacion)):
         if ataques_generacion[i] == 0:
             print(tablero(padres[i]))
-            print('Generación no. :', j)
-        break
-plt.plot(ataques_promedio, 'b')
+            print('Generación no. :', j + 1)
+
+plt.plot(ataques_promedio)
+plt.title("Ataques Promedio")
+plt.xlabel("Generación")
+plt.ylabel("No. de ataques promedio")
+plt.show()
+
+plt.plot(ataques_min)
+plt.title("Ataques mínimos")
+plt.xlabel("Generación")
+plt.ylabel("No. mínimo de ataques")
 plt.show()
