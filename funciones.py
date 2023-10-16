@@ -1,6 +1,8 @@
 import random
 import numpy as np
 
+random.seed(10042000)
+
 
 # Se creó un archivo separado en donde crear las funciones necesarias para el proyecto
 
