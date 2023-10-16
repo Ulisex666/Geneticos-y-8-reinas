@@ -72,9 +72,16 @@ def mutacion(board):
         board[alelos[i]] = gen2
     return board
 ```
-Y finalmente, para el reemplazo generacional, se eliminan a todos los padres y se reemplazan con los hijos. Se decidió trabajar con una población inicial de 50 tableros, durante el transcurso de 50 generaciones. También se le indico al programa que imprima una matriz cada vez que calcule que está tiene 0 ataques, es decir, es una solución del problema.
+Y finalmente, para el reemplazo generacional, se eliminan a todos los padres y se reemplazan con los hijos. Se decidió trabajar con una población inicial de 50 tableros, durante el transcurso de 100 generaciones. También se le indico al programa que imprima una matriz cada vez que calcule que está tiene 0 ataques, es decir, es una solución del problema.
 
 ##Conclusiones
 
 Empecemos analizando las gráficas de convergencia, la primera nos indica el promedio de ataques de cada generación, y la segunda cuál fue el número mínimo de ataques de cada generación.
 
+![Ataques promedio](https://github.com/Sesilu00/Geneticos-y-8-reinas/blob/main/ataques_promedio.png)
+
+![Ataques mínimos](https://github.com/Sesilu00/Geneticos-y-8-reinas/blob/main/ataques_minimos.png)
+
+Podemos ver que el número de ataques promedio no baja significamente con el paso de las generaciones, de hecho en este caso específico pareciera que tiende a crecer. Sin embargo, intentando con muchas otras diferentes semillas, se nota que la tendencia es que se mantiene alrededor de 5 ataques en promedio. Esto puede deberse a muchos factores: para empezar, como se comento anteriormente, la cruza cíclica es la parte más complicada de este proyevto, por lo que es probable que se haya cometido algún error a la hora de su implementación. Sin embargo, se comprobó muchas veces para asegurarse de que funcionaba correctamente, incluso a la hora de ciclarse.
+
+Otra explicación es el hecho de que este tipo de mezcla no da mucha variabilidad. A la hora del desarrollo de este proyecto se observó que hay muchas situaciones en las que el hijo es exactamente igual a uno de los padres, o solamente cambia en 2 valores. Así, la cruza de los elementos no da cambios siginificativos para mucha de la descendencia. Además, es muy probable que un tablero mute, independientemente del fitness que esta tenga, y la mutación afecta a casi todas las filas, por lo que es muy díficil que los tableros sobresalientes mantengan su información.
