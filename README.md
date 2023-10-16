@@ -17,8 +17,9 @@ En este caso se utilizó el lenguaje de programación Python 3, con el entorno d
 A continuación se encontraré una tabla donde se indica qué técnica se siguió para cada parte del algortimo genético:
 | Parte del algoritmo| Técnica utilizada|
 |--------------|-----------|
-| Representación | Permutacional     |
-| Inicialización      | Aleatoria  |
+| Representación | Permutacional|
+| Inicialización | Aleatoria|
+|Selección de padres| Sobrante estocástico|
 | Cruza | Cíclica |
 |Mutación | Mezcla|
 |Reemplazo| Generacional|
@@ -30,6 +31,50 @@ La inicialización aleatoria nos permite tener la mayor variabilidad posible en 
 ``` python
 ini_subjects = [random.sample(range(8), 8) for i in range(0, 50)]
 ```
+Para la selección de padres se utilizó el sobrante estocástico, que depende del valor esperado del fitness de cada lista. Este se calcula como 
+$\dfrac{x_i}{\bar{x}}$, el fitness de cada elemento sobre el fitness promedio. Así, se asegura que se van a cruzar aquellos que tengan un fitness mayor al promedio, y aquellos que tengan un fitness menor van a sobrevivir o no de acuerdo a un volado.
+```python
+padres1 = [padres[i] for i in range(len(padres)) if math.trunc(val_esp[i]) > 0]
+padres2 = [padres[i] for i in range(len(padres)) if int(val_esp[i]) == 0
+               and random.random() > 0.5]
+```
+La parte más compleja de programar, y la que puede que tenga más errores es la cruza cíclica. El algoritmo es algo compleo de explicar, pero a grandes rasgos consiste en mezclar ambas listas de tal forma que se conserve la mayor información posible sobre la posición en la que se encuentra cada elemento. Para ello, se divide en ciclos, y para cada ciclo se toman elementos de un padre, y elementos del otro padre para el siguiente ciclo. Esos ciclos nos dicen que índices de cada padre se heredan al hijo. En este paso resulto muy útil el uso de diccionarios de Python, para poder alterar los índices de una lista sin perder información sobre que elemento se encontraba en cada índice. A continuación se encuentra el código de la función que se desarrollo para obtener los ciclos, y se creo una segunda función para dar lugar a listas nuevas utilizando estos ciclos.
+```python
+def cruza1(sujeto_1, sujeto_2):
+    alelos_1 = {i: sujeto_1[i] for i in range(len(sujeto_1))}  # Diccionario de los alelos del primer sujeto
+    alelos_2 = {i: sujeto_2[i] for i in range(len(sujeto_2))}  # Diccionario de los alelos del segundo sujeto
+    ciclos = []  # lista de ciclos vacía
+    while alelos_1:
+        alelo = next(iter(alelos_1))  # Toma la primera llave disponible en alelos 1
+        gen = alelos_2[alelo]  # Busca ese alelo en alelos2 y da ese gen
+        ciclo = []  # El ciclo individual se crea vacío
+        while True:
+            ciclo.append(alelo)  # se agrega el alelo al ciclo
+            del alelos_1[alelo]  # se borra el alelo del diccionario
+            gen = alelos_2[alelo]  # se cambia el valor del gen al valor del alelo actual
+            alelo = gen  # se guarda el valor del gen en el alelo
+            if gen in alelos_1.values():  # se verifica que el gen esté en los disponibles
+                alelo = list(alelos_1.keys())[list(alelos_1.values()).index(alelo)]
+            else:
+                break
+        ciclos.append(ciclo)
+    return ciclos
+```
+Para la mutación de mezcla simplemente se selecciona un subconjunto de los índices y se les permuta de manera aleatoria. En este proyecto se mantuvieron intactos los índices de los extremos, y se permutaron todos los demás. La decisión de qué elementos permutar se dejó a la suerte de un volado, independientemente del fitness de cada tablero.
 
+``` python
+def mutacion(board):
+    alelos = random.sample(range(1, 7), 6)
+    for i in range(0, 5):
+        gen1 = board[alelos[i]]
+        gen2 = board[alelos[i + 1]]
+        board[alelos[i + 1]] = gen1
+        board[alelos[i]] = gen2
+    return board
+```
+Y finalmente, para el reemplazo generacional, se eliminan a todos los padres y se reemplazan con los hijos. Se decidió trabajar con una población inicial de 50 tableros, durante el transcurso de 50 generaciones. También se le indico al programa que imprima una matriz cada vez que calcule que está tiene 0 ataques, es decir, es una solución del problema.
 
+##Conclusiones
+
+Empecemos analizando las gráficas de convergencia, la primera nos indica el promedio de ataques de cada generación, y la segunda cuál fue el número mínimo de ataques de cada generación.
 
