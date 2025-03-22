@@ -1,6 +1,9 @@
 # Geneticos-y-8-reinas
 Desarrollo de un programa para encontrar soluciones al "Problema de las 8 Reinas", utilizando algoritmos genéticos.
 
+## NOTA:
+Se creó un fork del proyecto original dado que se perdió el acceso a la cuenta.
+
 ## Introducción
 
 El problema de las 8 reinas consiste en colocar, como el nombre lo indica, 8 diferentes reinas en un tablero de ajedrez de tal forma que no se ataquen entre ellas. Recordemos que una reina de ajedrez es libre de moverse en todas las filas, columnas y diagonales adyacentes a ella, el número de casillas que desee. Fue propuesto en 1848 por Max Bezzel, y actualmente a través de métodos matemáticos se conocen exactamente las soluciones para un tablero estándar de 8X8 casillas, siendo este número 92. 
